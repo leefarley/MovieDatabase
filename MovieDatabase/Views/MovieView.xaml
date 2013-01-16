@@ -28,72 +28,115 @@
             <TextBlock Grid.Column="1" Text="{Binding Title}" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
-        <GridView Grid.Row="1" SelectionMode="None" IsItemClickEnabled="False" IsSwipeEnabled="false" IsHoldingEnabled="False" Visibility="{Binding Visibility}">
-            <GridView.ItemsPanel>
+        <ScrollViewer 
+            Grid.Row="1"
+            VerticalScrollMode="Disabled"
+            HorizontalScrollMode="Enabled"
+            HorizontalScrollBarVisibility="Auto"
+            Visibility="{Binding Visibility}">
+            <Grid Width="Auto" >
+                <Grid.ColumnDefinitions  >
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!--<ScrollViewer.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"></StackPanel>
                 </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
+            </ScrollViewer.ItemsPanel>-->
             
-            <GridViewItem Margin="20" >
+            <!--<GridViewItem Margin="20" >-->
                 <Image q42controls:ImageExtensions.CacheUri="{Binding PosterPath}" 
                    Grid.Column="0"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Center"
                    Height="540"
                    Width="340"
+                   Margin="120,20,20,20"
                    Extensions:ImageExtensions.FadeInOnLoaded="True"
+                   
                    />
-            </GridViewItem>
-            <GridViewItem VerticalAlignment="Top" Margin="20" Width="440">
-                <Grid >
+                <Button caliburn:Message.Attach="[Event Click] = [PlayVideo($eventArgs)]" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,50" Content="Play Trailer" />
+            <!--</GridViewItem>
+            <GridViewItem VerticalAlignment="Top" Margin="20" Width="440">-->
+                <Grid Grid.Column="1" Margin="20">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="250" />
                     </Grid.ColumnDefinitions>
                     <TextBlock FontSize="32" Grid.Row="0" Grid.ColumnSpan="2" >Information</TextBlock>
-                    <TextBlock Text="Title"  Grid.Row="1" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
-                    <TextBlock x:Name="Title" Grid.Row="1" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Release Date"  Grid.Row="2" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
-                    <TextBlock x:Name="ReleaseDate" Grid.Row="2" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Runtime"  Grid.Row="3" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
-                    <TextBlock x:Name="Runtime" Grid.Row="3" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Release Date"  Grid.Row="1" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
+                    <TextBlock x:Name="ReleaseDate" Grid.Row="1" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Runtime"  Grid.Row="2" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
+                    <TextBlock x:Name="Runtime" Grid.Row="2" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Budget"  Grid.Row="3" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
+                    <TextBlock x:Name="Budget" Grid.Row="3" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Revenue"  Grid.Row="4" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
+                    <TextBlock x:Name="Revenue" Grid.Row="4" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Status"  Grid.Row="5" Grid.Column="0" Margin="15" FontSize="20" HorizontalAlignment="Right" />
+                    <TextBlock x:Name="Status" Grid.Row="5" Grid.Column="1" Margin="15" FontSize="20" HorizontalAlignment="Left"/>
                 </Grid>
-            </GridViewItem>
-            <GridViewItem VerticalAlignment="Top" Margin="20"  Width="438">
-                <Grid>
+            <!--</GridViewItem>
+            <GridViewItem VerticalAlignment="Top" Margin="20"  Width="438">-->
+                <Grid Grid.Column="2" Margin="20">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="60"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock FontSize="32" Grid.Row="0" >Overview</TextBlock>
                     <TextBlock x:Name="Overview" Grid.Row="1" Margin="15" Width="400" TextWrapping="Wrap" FontSize="20" />
                 </Grid>
-            </GridViewItem>
-            <GridViewItem Margin="20">
-                <Grid>
+            <!--</GridViewItem>
+            <GridViewItem Margin="20">-->
+                <Grid Grid.Column="3" Width="400" Margin="20" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="60"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock FontSize="32" Grid.Row="0">Actors</TextBlock>
-                    <GridView Grid.Row="1" x:Name="Actors" ItemTemplate="{StaticResource CastMemeberItemTemplate}" caliburn:Message.Attach="[Event ItemClick] = [ActorSelected($eventArgs)]" SelectionMode="None" IsItemClickEnabled="True" IsSwipeEnabled="false" >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="15" Height="500"  HorizontalScrollMode="Disabled" VerticalAlignment="Top">
+                    <GridView x:Name="Actors" ItemTemplate="{StaticResource CastMemeberItemTemplate}" caliburn:Message.Attach="[Event ItemClick] = [ActorSelected($eventArgs)]" SelectionMode="None" IsItemClickEnabled="True" IsSwipeEnabled="false"  >
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapGrid Orientation="Vertical" />
+                                <WrapGrid Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </GridView>
-                    
+                    </ScrollViewer>
                 </Grid>
-            </GridViewItem>
-        </GridView>
+            <!--</GridViewItem>
+            <GridViewItem Margin="20">-->
+                <Grid Grid.Column="4" Width="400" Margin="20,20,120,20" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock FontSize="32" Grid.Row="0">Crew</TextBlock>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="15" Height="500"  HorizontalScrollMode="Disabled" VerticalAlignment="Top">
+                        <GridView x:Name="Crew" ItemTemplate="{StaticResource CrewMemeberItemTemplate}" caliburn:Message.Attach="[Event ItemClick] = [ActorSelected($eventArgs)]" SelectionMode="None" IsItemClickEnabled="True" IsSwipeEnabled="false"  >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapGrid Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </GridView>
+                    </ScrollViewer>
+                </Grid>
+            <!--</GridViewItem>-->
+            </Grid>
+        </ScrollViewer>
 
         <ProgressRing Grid.Row="1" Width="100" Height="100" IsActive="{Binding Loading}"/>
 

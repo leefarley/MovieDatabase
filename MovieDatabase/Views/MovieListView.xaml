@@ -32,9 +32,15 @@
             IsItemClickEnabled="True"
             caliburn:Message.Attach="[Event ItemClick] = [MovieSelected($eventArgs)]"
             IsSwipeEnabled="false"
-            Padding="30,20"
-            Visibility="{Binding Visibility}"
-            />
+            Width="Auto"
+            Padding="120,30,120,30"
+            Visibility="{Binding Visibility}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapGrid Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </GridView>
 
     </Grid>
     

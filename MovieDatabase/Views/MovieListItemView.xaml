@@ -8,18 +8,13 @@
     xmlns:caliburn="using:Caliburn.Micro" 
     xmlns:q42controls="using:Q42.WinRT.Controls"
     mc:Ignorable="d"
-    d:DesignHeight="300"
+    d:DesignHeight="240"
     d:DesignWidth="165">
-    
-    <Grid Width="165">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="270" />
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
 
+    <Grid Width="165" Height="240">
         <Image q42controls:ImageExtensions.CacheUri="{Binding Poster}" />
-        
-        <TextBlock x:Name="Title"  Grid.Row="1" />
-        
+        <StackPanel VerticalAlignment="Bottom" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}">
+            <TextBlock Text="{Binding Title}" Foreground="{StaticResource ListViewItemOverlayForegroundThemeBrush}" Style="{StaticResource TitleTextStyle}" Height="60" Margin="15,0,15,0"/>
+        </StackPanel>
     </Grid>
 </UserControl>

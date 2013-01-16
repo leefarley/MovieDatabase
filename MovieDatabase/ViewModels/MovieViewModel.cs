@@ -30,12 +30,19 @@ namespace MovieDatabase.ViewModels
 
         public void ActorSelected(ItemClickEventArgs eventArgs)
         {
-            var sample = (MovieActorModel)eventArgs.ClickedItem;
+            var sample = (PersonBaseModel)eventArgs.ClickedItem;
 
-            NavigationService.UriFor<ActorViewModel>()
+            NavigationService.UriFor<PersonViewModel>()
                 .WithParam(p => p.ActorId, sample.Id)
                 .WithParam(p => p.BackgroundImage, _backgroundImage)
                 .WithParam(p => p.Name, sample.Name).Navigate();
+        }
+
+        public void PlayVideo(ItemClickEventArgs eventArgs)
+        {
+            NavigationService.UriFor<VideoViewModel>()
+                .WithParam(p => p.VideoKey, VideoKey)
+                .Navigate();
         }
 
         private async void Populate()
@@ -48,6 +55,11 @@ namespace MovieDatabase.ViewModels
             ReleaseDate = movie.ReleaseDate.Date.ToString("d MMM yyyy");
             Runtime = movie.Runtime;
             Actors = movie.Casts.Cast;
+            Crew = movie.Casts.Crew;
+            Budget = movie.Budget;
+            Revenue = movie.Revenue;
+            Status = movie.Status;
+            VideoKey = movie.Trailers.YouTube.First().Source;
             Loading = false;
         }
 
@@ -125,13 +137,46 @@ namespace MovieDatabase.ViewModels
         /// <summary>
         /// Comments
         /// </summary>
-        private int _runtime;
-        public int Runtime
+        private string _runtime;
+        public string Runtime
         {
-            get{ return _runtime; }
+            get{ return string.Format("{0}m",_runtime); }
             set{ _runtime = value; NotifyOfPropertyChange(); }
         } 
         #endregion Runtime
+        #region Budget
+        /// <summary>
+        /// Comments
+        /// </summary>
+        private string _budget;
+        public string Budget
+        {
+            get{ return string.Format("${0}",_budget); }
+            set{ _budget = value; NotifyOfPropertyChange(); }
+        } 
+        #endregion Budget
+        #region Revenue
+        /// <summary>
+        /// Comments
+        /// </summary>
+        private string _revenue;
+        public string Revenue
+        {
+            get{ return string.Format("${0}",_revenue); }
+            set{ _revenue = value; NotifyOfPropertyChange(); }
+        } 
+        #endregion Revenue
+        #region Status
+        /// <summary>
+        /// Comments
+        /// </summary>
+        private string _status;
+        public string Status
+        {
+            get{ return _status; }
+            set{ _status = value; NotifyOfPropertyChange(); }
+        } 
+        #endregion Status
         #region Actors
         /// <summary>
         /// Comments
@@ -143,6 +188,19 @@ namespace MovieDatabase.ViewModels
             set{ _actors = value; NotifyOfPropertyChange(); }
         } 
         #endregion Actors
+        #region Crew
+        /// <summary>
+        /// Comments
+        /// </summary>
+        private IEnumerable<MovieCrewModel> _crew;
+        public IEnumerable<MovieCrewModel> Crew
+        {
+            get{ return _crew; }
+            set{ _crew = value; NotifyOfPropertyChange(); }
+        } 
+        #endregion Crew
+
+        public string VideoKey { get; set; }
 
 
     }

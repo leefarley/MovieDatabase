@@ -22,6 +22,11 @@ namespace MovieDatabase.ViewModels
 
 
         #endregion PosterPath
-        public string Character { get; set; }
+        public string Character { set { _position = value; } }
+        public string Job { set { _position = value; } }
+        private string _position;
+        public string Position {
+            get { return _position; }
+        }
     }
 }

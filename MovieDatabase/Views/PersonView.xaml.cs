@@ -19,9 +19,9 @@ namespace MovieDatabase.Views
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class ActorView : Page
+    public sealed partial class PersonView : Page
     {
-        public ActorView()
+        public PersonView()
         {
             this.InitializeComponent();
         }

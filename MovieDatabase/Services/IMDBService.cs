@@ -33,7 +33,7 @@ namespace MovieDatabase.Services
 
         public async Task<MovieModel> GetMovieAsync(int id)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync(string.Format("movie/{0}?api_key={1}&append_to_response=casts", id, apiKey));
+            HttpResponseMessage response = await _httpClient.GetAsync(string.Format("movie/{0}?api_key={1}&append_to_response=casts,trailers", id, apiKey));
             MovieModel movie = JsonConvert.DeserializeObject<MovieModel>(await response.Content.ReadAsStringAsync());
             return movie;
         }
@@ -52,11 +52,11 @@ namespace MovieDatabase.Services
             return movies;
         }
 
-        public async Task<ActorModel> GetActorAsync(int actorId)
+        public async Task<PersonModel> GetPersonAsync(int actorId)
         {
             HttpResponseMessage response = await _httpClient.GetAsync(string.Format("person/{0}?api_key={1}&append_to_response=credits", actorId, apiKey));
             string responseMessage = await response.Content.ReadAsStringAsync();
-            ActorModel movie = JsonConvert.DeserializeObject<ActorModel>(responseMessage);
+            PersonModel movie = JsonConvert.DeserializeObject<PersonModel>(responseMessage);
             return movie;
         }
 
@@ -102,16 +102,23 @@ namespace MovieDatabase.Services
         [JsonProperty("release_date")]
         public DateTime ReleaseDate { get; set; }
         public string Overview { get; set; }
-        public int Runtime { get; set; }
+        public string Runtime { get; set; }
         public MovieCastModel Casts { get; set; }
+        public string Budget { get; set; }
+        public string Revenue { get; set; }
+        public string Status { get; set; }
+        public IEnumerable<GenreViewModel> Genres { get; set; }
+
+        public TrailersModel Trailers { get; set; }
     }
 
     public class MovieCastModel
     {
         public IEnumerable<MovieActorModel> Cast { get; set; }
+        public IEnumerable<MovieCrewModel> Crew { get; set; }
     }
 
-    public class ActorModel
+    public class PersonModel
     {
         public string Name { get; set; }
         public string Biography { get; set; }
@@ -122,11 +129,24 @@ namespace MovieDatabase.Services
         public IEnumerable<string> AlternateNames { get; set; }
         [JsonProperty("profile_path")]
         public string ImagePath { get; set; }
-        public ActorCreditsModel Credits { get; set; }
+        public CreditsModel Credits { get; set; }
     }
 
-    public class ActorCreditsModel
+    public class CreditsModel
     {
         public IEnumerable<CastMovieItemModel> Cast { get; set; }
+        public IEnumerable<CastMovieItemModel> Crew { get; set; }
+    }
+
+    public class TrailersModel
+    {
+        public ICollection<VideosModel> YouTube { get; set; }
+    }
+
+    public class VideosModel
+    {
+        public string Name { get; set; }
+        public string Source { get; set; }
+        public string Size { get; set; }
     }
 }

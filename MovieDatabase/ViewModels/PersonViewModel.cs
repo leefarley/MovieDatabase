@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MovieDatabase.ViewModels
 {
-    public class ActorViewModel : BaseViewModel
+    public class PersonViewModel : BaseViewModel
     {
         private readonly IMDBService _imdbService;
 
@@ -23,7 +23,7 @@ namespace MovieDatabase.ViewModels
             set { _backgroundImage = value; NotifyOfPropertyChange(); }
         }
 
-        public ActorViewModel(INavigationService navigationService)
+        public PersonViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             _imdbService = new IMDBService();
@@ -43,20 +43,22 @@ namespace MovieDatabase.ViewModels
             NavigationService.UriFor<MovieViewModel>()
                 .WithParam(p => p.MovieId, sample.Id)
                 .WithParam(p => p.Title, sample.Title)
+                .WithParam(p => p.BackgroundImage, _backgroundImage)
                 .Navigate();
         }
 
         private async void Populate()
         {
-            ActorModel actor = await _imdbService.GetActorAsync(ActorId);
-            Name = actor.Name;
-            Biography = actor.Biography;
-            ProfileImage = actor.ImagePath;
-            AlternateNames = actor.AlternateNames;
-            Birthday = actor.Birthday;
-            Deathday = actor.Deathday;
-            Homepage = actor.Homepage;
-            AlsoIn = actor.Credits.Cast;
+            PersonModel person = await _imdbService.GetPersonAsync(ActorId);
+            Name = person.Name;
+            Biography = person.Biography;
+            ProfileImage = person.ImagePath;
+            AlternateNames = person.AlternateNames;
+            Birthday = person.Birthday;
+            Deathday = person.Deathday;
+            Homepage = person.Homepage;
+            Cast = person.Credits.Cast;
+            Crew = person.Credits.Crew;
             Loading = false;
         }
 
@@ -150,16 +152,27 @@ namespace MovieDatabase.ViewModels
             set{ _placeOfBirth = value; NotifyOfPropertyChange(); }
         } 
         #endregion PlaceOfBirth
-        #region AlsoIn
+        #region Cast
         /// <summary>
         /// Comment
         /// </summary>
-        private IEnumerable<CastMovieItemModel> _alsoIn;
-        public IEnumerable<CastMovieItemModel> AlsoIn
+        private IEnumerable<CastMovieItemModel> _cast;
+        public IEnumerable<CastMovieItemModel> Cast
         {
-            get{ return _alsoIn; }
-            set{ _alsoIn = value; NotifyOfPropertyChange(); }
+            get{ return _cast; }
+            set{ _cast = value; NotifyOfPropertyChange(); }
         } 
-        #endregion AlsoIn
+        #endregion Cast
+        #region Crew
+        /// <summary>
+        /// Comment
+        /// </summary>
+        private IEnumerable<CastMovieItemModel> _crew;
+        public IEnumerable<CastMovieItemModel> Crew
+        {
+            get { return _crew; }
+            set { _crew = value; NotifyOfPropertyChange(); }
+        }
+        #endregion Crew
     }
 }
